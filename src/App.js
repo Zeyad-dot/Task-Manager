@@ -80,7 +80,7 @@ const App = () => {
           <button className="dark-mode-btn" onClick={toggleDarkMode}>
             <img
               className="icon"
-              src={darkMode ? "/sun.png" : "/moon.png"}
+              src={darkMode ? `${process.env.PUBLIC_URL}/sun.png` : `${process.env.PUBLIC_URL}/moon.png`}
               alt="dark mode icon"
             />
           </button>
