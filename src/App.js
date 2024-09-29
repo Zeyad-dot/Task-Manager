@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TaskList from "./components/TaskList";
 import Filter from "./components/Filter";
+import MobileHeader from "./components/MobileHeader";
 
 const App = () => {
   const [tasks, setTasks] = useState(() => {
@@ -9,7 +10,18 @@ const App = () => {
 
   const [filter, setFilter] = useState("all");
   const [taskInput, setTaskInput] = useState("");
-  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('theme') === 'dark');
+  const [darkMode, setDarkMode] = useState(
+    () => localStorage.getItem("theme") === "dark"
+  );
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup listener on unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -46,11 +58,11 @@ const App = () => {
 
   useEffect(() => {
     if (darkMode) {
-      document.body.classList.add('dark-theme');
-      localStorage.setItem('theme', 'dark');
+      document.body.classList.add("dark-theme");
+      localStorage.setItem("theme", "dark");
     } else {
-      document.body.classList.remove('dark-theme');
-      localStorage.setItem('theme', 'light');
+      document.body.classList.remove("dark-theme");
+      localStorage.setItem("theme", "light");
     }
   }, [darkMode]);
 
@@ -65,6 +77,7 @@ const App = () => {
       <Filter setFilter={setFilter} />
       <main>
         <div className="header">
+          {isMobile && <MobileHeader darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>}
           <form onSubmit={addTask} className="task-form">
             <input
               type="text"
@@ -77,13 +90,17 @@ const App = () => {
               Add Task
             </button>
           </form>
-          <button className="dark-mode-btn" onClick={toggleDarkMode}>
-            <img
-              className="icon"
-              src={darkMode ? "/sun.png" : "/moon.png"}
-              alt="dark mode icon"
-            />
-          </button>
+          {!isMobile && <button className="dark-mode-btn" onClick={toggleDarkMode}>
+              <img
+                className="icon"
+                src={
+                  darkMode
+                    ? `${process.env.PUBLIC_URL}/sun.png`
+                    : `${process.env.PUBLIC_URL}/moon.png`
+                }
+                alt="dark mode icon"
+              />
+            </button>}
         </div>
         <TaskList
           tasks={filteredTasks}

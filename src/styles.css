@@ -49,7 +49,7 @@ body {
   font-size: 24px;
 }
 
-.sidebar ul {
+.sidebar ul{
   list-style-type: none;
 }
 
@@ -71,6 +71,50 @@ body {
   outline: none;
 }
 
+/* Sidebar container */
+.mobile-list-sidebar {
+  position: absolute;
+  left: -250px; 
+  width: 250px;
+  height: 100%;
+  background-color: #4a4e69;
+  color: white;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mobile-list-sidebar.open {
+  left: 0;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-list-sidebar .filter-btn {
+  padding: 20px;
+  border-bottom: 1px solid #444;
+  cursor: pointer;
+}
+
+.mobile-list-sidebar .filter-btn:active {
+  background-color: #575757;
+}
+
+.dropdown-btn {
+  position: relative;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  z-index: 1001;
+}
+
 /* Main Content Styling */
 main {
   flex: 1;
@@ -79,7 +123,6 @@ main {
   flex-direction: column;
   justify-content: flex-start;
   background-color: var(--secondary-color);
-  border-left: 1px solid #ddd;
 }
 
 .right-side-container {
@@ -90,6 +133,13 @@ main {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+}
+
+
+.mobile-title{
+  font-size: 2.2rem;
+  text-align: center;
+  padding-right:30px;
 }
 
 .task-form {
@@ -116,21 +166,50 @@ main {
   border-radius: 5px;
 }
 
+@media (max-width: 768px) {
+  .header{
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex-basis: 100%;
+    max-height: 200px;
+  }
+  .task-input{
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .add-task-btn{
+    width: 80%;
+    margin: 0 10%;
+  }
+  .dark-mode-btn{
+    order: 1;
+  }
+  aside{
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background:none;
+  }
+}
+
 .add-task-btn:hover {
   background-color: #f4b700;
 }
 
 /* Dark Mode Button Styling */
-.dark-mode-btn {
+.dark-mode-btn, .mobile-dark-mode-btn {
   background: transparent;
   color: white;
   border: none;
-  padding: 10px 20px;
   margin-left: auto;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
   border-radius: 5px;
+}
+
+.dark-mode-btn {
+  padding: 10px 20px;
 }
 
 /* Task List */
@@ -181,15 +260,15 @@ main {
   color: var(--text-color);
 }
 
-.edit-mode-text > button{
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-    background-color: var(--text-color);
-    color: var(--secondary-color);
-    padding: 4px;
-    border-radius: 6px;
-    transition: all ease-in-out .3s;
+.edit-mode-text > button {
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  background-color: var(--text-color);
+  color: var(--secondary-color);
+  padding: 4px;
+  border-radius: 6px;
+  transition: all ease-in-out 0.3s;
 }
 
 /* Dark Mode Styling */
@@ -253,4 +332,13 @@ body.dark-mode {
 
 .completed .task-name {
   text-decoration: line-through;
+}
+
+.mobile-header{
+  width: 100%;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
